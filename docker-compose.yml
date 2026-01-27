@@ -116,7 +116,7 @@ services:
     ports:
       - "3100:3100"
     volumes:
-      - ./infrastructure/loki/loki-config.yaml:/etc/loki/loki-config.yaml:ro
+      - ./infrastructure/loki/loki-config.yml:/etc/loki/loki-config.yml:ro
     healthcheck:
       test: [ "CMD", "wget", "--spider", "-q", "http://localhost:3100/ready" ]
       interval: 10s
@@ -126,9 +126,9 @@ services:
   tempo:
     image: grafana/tempo:2.4.1
     container_name: tempo
-    command: [ "-config.file=/etc/tempo/tempo.yaml" ]
+    command: [ "-config.file=/etc/tempo/tempo.yml" ]
     volumes:
-      - ./infrastructure/tempo/tempo.yaml:/etc/tempo/tempo.yaml
+      - ./infrastructure/tempo/tempo.yml:/etc/tempo/tempo.yml
       - tempo_data:/var/tempo
     ports:
       - "3200:3200"
