@@ -35,7 +35,7 @@ public class Country {
 
     @NotNull
     @ColumnDefault("true")
-    @Column(name = "created", nullable = false)
+    @Column(name = "updated", nullable = false)
     private Instant updated;
 
     @Size(max = 128)
