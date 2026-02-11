@@ -1,0 +1,72 @@
+### 1. Регистрация нового человека (создание)
+POST http://localhost:8092/v1/persons
+Content-Type: application/json
+
+{
+  "firstName": "Иван",
+  "lastName": "Петров",
+  "email": "ivan.petrov@example.com",
+  "passport_number": "1234 567890",
+  "phone_number": "+79161234567",
+  "address": {
+    "address": "ул. Ленина, д. 15, кв. 42",
+    "zip_code": "101000",
+    "city": "Москва",
+    "country_code": "RUS"
+  }
+}
+
+### 2. Регистрация — другой пример (Казахстан)
+POST http://localhost:8092/v1/persons
+Content-Type: application/json
+
+{
+  "firstName": "Айгуль",
+  "lastName": "Серикбаева",
+  "email": "aigul.s@example.kz",
+  "passport_number": "KZ12345678",
+  "phone_number": "+77071234567",
+  "address": {
+    "address": "пр. Абая, 78",
+    "zip_code": "050000",
+    "city": "Алматы",
+    "country_code": "KAZ"
+  }
+}
+
+### Получить всех людей (без фильтра)
+GET http://localhost:8092/v1/persons
+
+### Получить людей по email (один или несколько)
+GET http://localhost:8092/v1/persons?email=ivan.petrov@example.com
+
+### Получить людей по нескольким email
+GET http://localhost:8092/v1/persons?email=ivan.petrov@example.com&email=aigul.s@example.kz
+
+### Получить человека по ID
+GET http://localhost:8092/v1/persons/7e7458ea-6687-4d4d-a8c2-53c8a5c8b908
+
+### Обновить человека
+PUT http://localhost:8092/v1/persons/7e7458ea-6687-4d4d-a8c2-53c8a5c8b908
+Content-Type: application/json
+
+{
+  "firstName": "Иван Сергеевич",
+  "lastName": "Петров",
+  "email": "ivan.petrov@example.com",
+  "passport_number": "1234 567890",
+  "phone_number": "+79165556677",
+  "address": {
+    "address": "ул. Ленина, д. 15, кв. 77",
+    "zip_code": "101000",
+    "city": "Москва",
+    "country_code": "RUS"
+  }
+}
+
+### Soft-delete человека
+DELETE http://localhost:8092/v1/persons/11e322fc-d2f2-4dff-b442-7745fabecd93
+
+### Compensate (hard delete) — для отката регистрации
+DELETE http://localhost:8092/v1/persons/compensate-registration/11e322fc-d2f2-4dff-b442-7745fabecd93
+

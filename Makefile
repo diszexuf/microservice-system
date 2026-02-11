@@ -1,7 +1,7 @@
-DOCKER_COMPOSE = docker-compose
+DOCKER_COMPOSE = docker compose
 NEXUS_URL = http://localhost:8081
 
-.PHONY: all up start stop clean logs
+.PHONY: all up start stop clean logs rebuild
 
 all: up build-artifacts start
 
@@ -24,7 +24,7 @@ endif
 
 up:
 	$(DOCKER_COMPOSE) up -d nexus
-	@echo "Waiting for Nexus to be heathy..."
+	@echo "Waiting for Nexus to be healthy..."
 	@$(WAIT_CMD)
 	@echo "Nexus is healthy!"
 
@@ -37,7 +37,12 @@ start:
 stop:
 	$(DOCKER_COMPOSE) down
 
-clean:
+clean: stop
 	$(DOCKER_COMPOSE) rm -f
-	docker volume rm $$(docker volume ls -qf dangling=true) 2>/dev/null | true
+	docker volume rm $$(docker volume ls -qf dangling=true) 2>/dev/null || true
+	rm -rf ./person-service/build
 
+logs:
+	$(DOCKER_COMPOSE) logs -f --tail=200
+
+rebuild: clean all
