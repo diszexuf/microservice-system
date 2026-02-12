@@ -26,11 +26,16 @@ plugins {
 
 group = "com.github.diszexuf"
 version = "1.0.0-SNAPSHOT"
-description = "API Gateway for study project"
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(24)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
     }
 }
 
@@ -98,7 +103,6 @@ dependencies {
 
     implementation("io.netty:netty-resolver-dns-native-macos:${versions["nettyResolverVersion"]}")
 }
-
 
 tasks.withType<Test> {
     useJUnitPlatform()
